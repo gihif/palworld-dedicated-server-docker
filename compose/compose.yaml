@@ -1,19 +1,27 @@
 services:
   palworld-server:
     # https://github.com/pocketpairjp/palworld-dedicated-server-docker/pkgs/container/palserver
-    image: ghcr.io/pocketpairjp/palserver:v0.3.9.59545
+    image: ghcr.io/pocketpairjp/palserver:v0.5.5.70590
 
     entrypoint: /pal/helper.sh
 
+    restart: always
+
     # https://tech.palworldgame.com/settings-and-operation/arguments
     command:
-      - -port=8211
       - -useperfthreads
       - -NoAsyncLoadingThread
       - -UseMultithreadForDS
+      - -logformat=json
+      - -publiclobby
+      - -port=1717
+      - -publicip=41.216.191.215
+      - -publicport=1717
+      - -players=8
 
     ports:
-      - "8211:8211/udp"
+      - "1717:1717/udp"
+      - "1717:1717/tcp"
 
     volumes:
       - ./helper.sh:/pal/helper.sh:ro
